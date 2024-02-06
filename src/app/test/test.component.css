@@ -1,0 +1,34 @@
+.column {
+    float: left;
+    width: 33.33%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .main-title{
+    text-align: center;
+    border-style: solid;
+    background-color:#228dfd;
+    font-family: Georgia, serif;
+    color: #000000;
+    font-size:20px;
+    height:40px
+ }
+ .span {
+  text-align: center;
+}
+.mat-toolbar{
+  justify-content: center;
+}
+.my-select-panel-class {
+  width:20px;
+  max-width:20px;
+  background-color: red;
+  font-size: 10px;
+}
+ 

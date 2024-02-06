@@ -1,0 +1,545 @@
+<mat-toolbar class="main-title">
+  <span >Source: {{ source }}</span>
+</mat-toolbar>
+<mat-tab-group>
+  <mat-tab label="Tables">
+    <mat-card>
+      <mat-label>Count: </mat-label> <span> {{ listofTables.length }}</span>
+      <mat-card-content>
+        <mat-label>Table DropDown:</mat-label>
+        <span><mat-select panelClass="my-select-panel-class" (selectionChange)="getDataforEntity($event.value, 'table')" >
+          <mat-option
+            *ngFor="let table of listofTables"
+            [value]="table.value"
+            >{{ table.viewvalue }}</mat-option
+          >
+        </mat-select></span>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['table']"
+          class="mat-elevation-z8" placeholder="Data"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+         
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef> Column2 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef> Column3</th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-label>Schema: </mat-label>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Functions">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Function DropDown:</mat-label>
+        <mat-select
+          (selectionChange)="getDataforEntity($event.value, 'functions')"
+        >
+          <mat-option
+            *ngFor="let function of listofFunctions"
+            [value]="function.value"
+            >{{ function.viewvalue }}</mat-option
+          >
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['functions']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef> Column2 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef> Column3 </th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Materlized Views"
+    ><mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Materlized View DropDown:</mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'mview')">
+          <mat-option *ngFor="let view of listofMViews" [value]="view.value">{{
+            view.viewvalue
+          }}</mat-option>
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['mview']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+         <!-- Count Column -->
+         <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+          <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+        </ng-container>
+
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef> Column2 | </th>
+          <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+        </ng-container>
+
+        <!-- Schema Column -->
+        <ng-container matColumnDef="schema">
+          <th mat-header-cell *matHeaderCellDef> Column3 </th>
+          <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Views">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Views DropDown:</mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'view')">
+          <mat-option *ngFor="let view of listofViews" [value]="view.value">{{
+            view.viewvalue
+          }}</mat-option>
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['view']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef>Column2 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef> Column3 </th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content> </mat-card
+  ></mat-tab>
+  <mat-tab label="Stored Procedures">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Stored Procedures DropDown:</mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'sp')">
+          <mat-option *ngFor="let sp of listofSps" [value]="sp.value">{{
+            sp.viewvalue
+          }}</mat-option>
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['sp']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef> Column2 |</th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef> Column3 </th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content> </mat-card
+  ></mat-tab>
+  <mat-tab label="Triggers">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Trigger DropDown:</mat-label>
+        <mat-select
+          (selectionChange)="getDataforEntity($event.value, 'triggers')"
+        >
+          <mat-option
+            *ngFor="let triger of listofTriggers"
+            [value]="triger.value"
+            >{{ triger.viewvalue }}</mat-option
+          >
+        </mat-select>
+        <!-- <mat-label>Data: </mat-label> -->
+        <!-- <table
+          mat-table
+          [dataSource]="tableData['triggers']"
+          class="mat-elevation-z8"
+        > -->
+          <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Count Column -->
+        <!-- <ng-container matColumnDef="count">
+          <tr mat-header-cell *matHeaderCellDef>Count:</tr>
+          <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+        </ng-container> -->
+
+        <!-- Data Column -->
+        <!-- <ng-container matColumnDef="data">
+          <tr mat-header-cell *matHeaderCellDef>Data:</tr>
+          <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+        </ng-container> -->
+
+        <!-- Schema Column -->
+        <!-- <ng-container matColumnDef="schema">
+          <tr mat-header-cell *matHeaderCellDef>Schema</tr>
+          <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table> -->
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
+<mat-toolbar class="main-title">
+  <span>Target: Postgres</span>
+</mat-toolbar>
+<mat-tab-group>
+  <mat-tab label="Tables">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Tables DropDown:</mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'table')">
+          <mat-option
+            *ngFor="let table of listofTables"
+            [value]="table.value"
+            >{{ table.viewvalue }}</mat-option
+          >
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['table']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+         <!-- Count Column -->
+         <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+          <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+        </ng-container>
+
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef>Column2 | </th>
+          <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+        </ng-container>
+
+        <!-- Schema Column -->
+        <ng-container matColumnDef="schema">
+          <th mat-header-cell *matHeaderCellDef> Column3 </th>
+          <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <mat-label>schema: </mat-label>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Functions">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Function DropDown:</mat-label>
+        <mat-select
+          (selectionChange)="getDataforEntity($event.value, 'functions')"
+        >
+          <mat-option
+            *ngFor="let function of listofFunctions"
+            [value]="function.value"
+            >{{ function.viewvalue }}</mat-option
+          >
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['functions']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef>Column2 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef>Column3 </th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Materlized Views"
+    ><mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>MView DropDown:</mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'mview')">
+          <mat-option *ngFor="let view of listofMViews" [value]="view.value">{{
+            view.viewvalue
+          }}</mat-option>
+        </mat-select>
+        <mat-label>Data:</mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['mview']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef>Column2 | </th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef>Column3 </th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Views">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>View DropDown: </mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'view')">
+          <mat-option *ngFor="let view of listofViews" [value]="view.value">{{
+            view.viewvalue
+          }}</mat-option>
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['view']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- Count Column -->
+          <ng-container matColumnDef="count">
+            <th mat-header-cell *matHeaderCellDef>Count:</th>
+            <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+          </ng-container>
+
+          <!-- Data Column -->
+          <ng-container matColumnDef="data">
+            <th mat-header-cell *matHeaderCellDef>Data:</th>
+            <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+          </ng-container>
+
+          <!-- Schema Column -->
+          <ng-container matColumnDef="schema">
+            <th mat-header-cell *matHeaderCellDef>Schema</th>
+            <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content> </mat-card
+  ></mat-tab>
+  <mat-tab label="Stored Procedures">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>SP Dropdown:</mat-label>
+        <mat-select (selectionChange)="getDataforEntity($event.value, 'sp')">
+          <mat-option *ngFor="let sp of listofSps" [value]="sp.value">{{
+            sp.viewvalue
+          }}</mat-option>
+        </mat-select>
+        <mat-label>Data: </mat-label>
+        <table
+          mat-table
+          [dataSource]="tableData['sp']"
+          class="mat-elevation-z8"
+        >
+          <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+         <!-- Count Column -->
+         <ng-container matColumnDef="count">
+          <th mat-header-cell *matHeaderCellDef>Column1 | </th>
+          <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+        </ng-container>
+
+        <!-- Data Column -->
+        <ng-container matColumnDef="data">
+          <th mat-header-cell *matHeaderCellDef>Column2 |</th>
+          <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+        </ng-container>
+
+        <!-- Schema Column -->
+        <ng-container matColumnDef="schema">
+          <th mat-header-cell *matHeaderCellDef>Column3 </th>
+          <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+        </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-card-content> </mat-card
+  ></mat-tab>
+  <mat-tab label="Triggers">
+    <mat-card>
+      <mat-label>Count: </mat-label>
+      <mat-card-content>
+        <mat-label>Triggers Dropdown: </mat-label>
+        <mat-select
+          (selectionChange)="getDataforEntity($event.value, 'triggers')"
+        >
+          <mat-option
+            *ngFor="let triger of listofTriggers"
+            [value]="triger.value"
+            >{{ triger.viewvalue }}</mat-option
+          >
+        </mat-select>
+        <!-- <table
+          mat-table
+          [dataSource]="tableData['triggers']"
+          class="mat-elevation-z8"
+        > -->
+          <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Count Column -->
+        <!-- <ng-container matColumnDef="count">
+          <tr mat-header-cell *matHeaderCellDef>Count:</tr>
+          <td mat-cell *matCellDef="let element">{{ element.count }}</td>
+        </ng-container> -->
+
+        <!-- Data Column -->
+        <!-- <ng-container matColumnDef="data">
+          <tr mat-header-cell *matHeaderCellDef>Data:</tr>
+          <td mat-cell *matCellDef="let element">{{ element.data }}</td>
+        </ng-container> -->
+
+        <!-- Schema Column -->
+        <!-- <ng-container matColumnDef="schema">
+          <tr mat-header-cell *matHeaderCellDef>Schema</tr>
+          <td mat-cell *matCellDef="let element">{{ element.schema }}</td>
+        </ng-container> -->
+
+          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table> -->
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>

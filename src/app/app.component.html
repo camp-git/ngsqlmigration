@@ -1,0 +1,12 @@
+<h1>Angular App Design for Migration Summary Dashboard</h1>
+<mat-card>
+  <mat-card-title>Choose Migration</mat-card-title>
+  <mat-card-content>
+    <mat-select (selectionChange)="navigateto($event)">
+      <mat-option value="ss2pg">SQL Server to Postgres</mat-option>
+      <mat-option value="o2pg">Oracle DB to Postgres</mat-option>
+    </mat-select>
+  </mat-card-content>
+</mat-card>
+
+<router-outlet> </router-outlet>
